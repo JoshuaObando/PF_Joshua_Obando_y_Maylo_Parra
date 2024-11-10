@@ -10,19 +10,19 @@
 
     if (iniciarSesion != null) {
         // Lógica para iniciar sesión
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
+        String Correo = request.getParameter("email");
+        String contrasena = request.getParameter("password");
 
         if (con != null) {
-            String sqlconsulta = "SELECT * FROM usuarios WHERE email = ? AND password = ?";
+            String sqlconsulta = "call VerificarCredenciales(?,?);";
             try (PreparedStatement pst = con.prepareStatement(sqlconsulta)) {
-                pst.setString(1, email);
-                pst.setString(2, password);
+                pst.setString(1, Correo);
+                pst.setString(2, contrasena);
                 ResultSet rs = pst.executeQuery();
 
                 if (rs.next()) {
                     // Verifica si el usuario es un administrador
-                    if ("JefeAdministrador@gmail.com".equals(rs.getString("email")) && "JefeAdministrador777".equals(rs.getString("password"))) {
+                    if ("JefeAdministrador@gmail.com".equals(rs.getString("Correo")) && "JefeAdministrador777".equals(rs.getString("contrasena"))) {
                         response.sendRedirect("../Vista/Jefe.jsp");
                     } else {
                         response.sendRedirect("../Vista/Cliente.jsp");
@@ -39,25 +39,25 @@
         }
     } else if (crearCuenta != null) {
         // Lógica para crear cuenta
-        String email = request.getParameter("email2");
-        String password = request.getParameter("password2");
+        String Correo = request.getParameter("email2");
+        String contrasena = request.getParameter("password2");
 
         if (con != null) {
             try {
                 // Verificar si el usuario ya existe
-                String sqlCheck = "SELECT email FROM usuarios WHERE email = ?";
+                String sqlCheck = "call VerificarCredenciales(?,?);";
                 try (PreparedStatement psCheck = con.prepareStatement(sqlCheck)) {
-                    psCheck.setString(1, email);
+                    psCheck.setString(1, Correo);
                     ResultSet rs = psCheck.executeQuery();
 
                     if (rs.next()) {
                         out.println("<p style='color:red;'>El correo electrónico ya está registrado.</p>");
                     } else {
                         // Insertar el nuevo usuario en la base de datos
-                        String sqlInsert = "INSERT INTO usuarios (email, password) VALUES (?, ?)";
+                        String sqlInsert = "CALL InsertarUsuario(?, ?);";
                         try (PreparedStatement psInsert = con.prepareStatement(sqlInsert)) {
-                            psInsert.setString(1, email);
-                            psInsert.setString(2, password);
+                            psInsert.setString(1, Correo);
+                            psInsert.setString(2, contrasena);
 
                             int result = psInsert.executeUpdate();
                             if (result > 0) {

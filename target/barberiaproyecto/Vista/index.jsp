@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,7 +36,7 @@
     <h1 class="eslogan">Bienvenido a tu barbería de confianza</h1>
     <div class="iniciar-sesion panel activo">
         <div class="contenedor">
-            <form action="../Controlador/Logica.jsp" method="post">
+         <form action="/barberiaproyecto/Controlador/Logica.jsp" method="post">
                 <h2>Iniciar sesión</h2>
                 <input class="input-box" type="email" placeholder="Correo electronico" name="email" required>
                 <input class="input-box" type="password" placeholder="Contraseña" name="password" required>
