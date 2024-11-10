@@ -449,3 +449,127 @@ footer {
     max-width: 1200px;
     margin: auto; /* Centrar el contenedor de la sección */
 }
+
+/* ===================================================================Estilos para jefe.jsp======================================================================= */
+/* General estilos */
+.Jefe {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background: url(https://cdn.pixabay.com/photo/2024/09/14/16/19/ai-generated-9047404_1280.png);
+    background-size: cover; /* Hace que la imagen cubra toda la pantalla */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-attachment: fixed; /* Fija la imagen de fondo para que no se desplace al hacer scroll */
+    background-position: center; /* Centra la imagen */
+}
+
+/* Header */
+.headerJefe {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: #333;
+    color: #fff;
+    z-index: 1;
+    position: sticky;
+}
+
+.headerJefe p {
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.headerJefe h1 {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+/* Section estilos */
+section {
+    width: 50%;
+    margin: 1.5rem auto;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 1.5rem;
+    box-shadow: 0 4px 8px rgba(253, 253, 253, 0.1);
+    border-radius: 50px;
+}
+
+section h2 {
+    text-align: center;
+    color: #0c0a0a;
+    margin-bottom: 1rem;
+}
+
+section h3 {
+    color: #000000;
+    margin-bottom: 0.4rem;
+}
+
+/* Form estilos */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+}
+
+form input[type="text"],
+form input[type="number"],
+form input[type="datetime-local"] {
+    padding: 0.6rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+form button {
+    padding: 0.6rem;
+    font-size: 1rem;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #45a049;
+}
+
+/* Button for Viewing Data */
+form.view-button {
+    text-align: center;
+}
+
+form.view-button button {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    background-color: #333;
+    color: #fff;
+    border-radius: 4px;
+}
+
+form.view-button button:hover {
+    background-color: #555;
+}
+
+/* Error and Success Messages */
+.message {
+    text-align: center;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+}
+
+.message.success {
+    color: #4CAF50;
+}
+
+.message.error {
+    color: #e74c3c;
+}
