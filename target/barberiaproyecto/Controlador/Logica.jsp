@@ -14,14 +14,13 @@
         String contrasena = request.getParameter("password");
 
         if (con != null) {
-            String sqlconsulta = "call VerificarCredenciales(?,?);";
+            String sqlconsulta = "CALL VerificarCredenciales(?, ?);";
             try (PreparedStatement pst = con.prepareStatement(sqlconsulta)) {
                 pst.setString(1, Correo);
                 pst.setString(2, contrasena);
                 ResultSet rs = pst.executeQuery();
 
                 if (rs.next()) {
-                    // Verifica si el usuario es un administrador
                     if ("JefeAdministrador@gmail.com".equals(rs.getString("Correo")) && "JefeAdministrador777".equals(rs.getString("contrasena"))) {
                         response.sendRedirect("../Vista/Jefe.jsp");
                     } else {
@@ -43,34 +42,22 @@
         String contrasena = request.getParameter("password2");
 
         if (con != null) {
-            try {
-                // Verificar si el usuario ya existe
-                String sqlCheck = "call VerificarCredenciales(?,?);";
-                try (PreparedStatement psCheck = con.prepareStatement(sqlCheck)) {
-                    psCheck.setString(1, Correo);
-                    ResultSet rs = psCheck.executeQuery();
+            String sqlInsert = "CALL InsertarUsuario(?, ?);";
+            try (PreparedStatement psInsert = con.prepareStatement(sqlInsert)) {
+                psInsert.setString(1, Correo);
+                psInsert.setString(2, contrasena);
 
-                    if (rs.next()) {
-                        out.println("<p style='color:red;'>El correo electrónico ya está registrado.</p>");
-                    } else {
-                        // Insertar el nuevo usuario en la base de datos
-                        String sqlInsert = "CALL InsertarUsuario(?, ?);";
-                        try (PreparedStatement psInsert = con.prepareStatement(sqlInsert)) {
-                            psInsert.setString(1, Correo);
-                            psInsert.setString(2, contrasena);
-
-                            int result = psInsert.executeUpdate();
-                            if (result > 0) {
-                                out.println("<p style='color:green;'>Registro exitoso. Ahora puedes iniciar sesión.</p>");
-                            } else {
-                                out.println("<p style='color:red;'>Error en el registro. Inténtalo de nuevo.</p>");
-                            }
-                        }
-                    }
+                int result = psInsert.executeUpdate();
+                if (result > 0) {
+                    out.println("<p style='color:green;'>Registro exitoso. Ahora puedes iniciar sesión.</p>");
                 }
             } catch (Exception e) {
-                e.printStackTrace();
-                out.println("<p style='color:red;'>Error: " + e.getMessage() + "</p>");
+                if (e.getMessage().contains("El correo ya está registrado")) {
+                    out.println("<p style='color:red;'>El correo electrónico ya está registrado.</p>");
+                } else {
+                    e.printStackTrace();
+                    out.println("<p style='color:red;'>Error en el registro: " + e.getMessage() + "</p>");
+                }
             }
         } else {
             out.println("No se pudo establecer la conexión a la base de datos.");

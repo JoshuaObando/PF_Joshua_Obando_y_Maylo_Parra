@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/128/595/595777.png">
     <title>Barberia TheMan</title>
+    <link rel="stylesheet" href="Vista/Estilo/login.css">
 </head>
 <body class="Sesion2">
     <div class="overlay"></div>
@@ -23,20 +23,14 @@
         <div class="auth-buttons">
             <button class="btn-registro" onclick="togglePanel('iniciar-sesion')">Iniciar sesión</button>
             <button class="btn-registro" onclick="togglePanel('crearcuenta')">Crear cuenta</button>
-            <script>
-                function togglePanel(panelId) {
-                    document.querySelector('.iniciar-sesion').classList.remove('activo');
-                    document.querySelector('.crearcuenta').classList.remove('activo');
-                    document.querySelector('.sobrenostros').classList.remove('activo');
-                    document.querySelector(`.${panelId}`).classList.add('activo');
-                }
-            </script>
         </div>
     </div>
     <h1 class="eslogan">Bienvenido a tu barbería de confianza</h1>
-    <div class="iniciar-sesion panel activo">
+
+    <!-- Paneles -->
+    <div class="iniciar-sesion panel activo"> <!-- Solo este panel tiene "activo" de inicio -->
         <div class="contenedor">
-         <form action="/barberiaproyecto/Controlador/Logica.jsp" method="post">
+            <form action="/barberiaproyecto/Controlador/Logica.jsp" method="post">
                 <h2>Iniciar sesión</h2>
                 <input class="input-box" type="email" placeholder="Correo electronico" name="email" required>
                 <input class="input-box" type="password" placeholder="Contraseña" name="password" required>
@@ -44,9 +38,10 @@
             </form>
         </div>
     </div>
+
     <div class="crearcuenta panel">
         <div class="contenedor">
-            <form action="../Controlador/Logica.jsp" method="post">
+            <form action="/barberiaproyecto/Controlador/Logica.jsp" method="post">
                 <h2>Crear cuenta</h2>
                 <input class="input-box" type="email" placeholder="Correo electronico" name="email2" required>
                 <input class="input-box" type="password" placeholder="Contraseña" name="password2" required>
@@ -54,5 +49,19 @@
             </form>
         </div>
     </div>
+
+    <div class="sobrenostros panel">
+        <div class="contenedor">
+            <h2>Sobre Nosotros</h2>
+            <p>En TheMan Barbería, nos especializamos en ofrecer una experiencia de alta calidad...</p>
+        </div>
+    </div>
+
+    <script>
+        function togglePanel(panelId) {
+            document.querySelectorAll('.panel').forEach(panel => panel.classList.remove('activo'));
+            document.querySelector(`.${panelId}`).classList.add('activo');
+        }
+    </script>
 </body>
 </html>

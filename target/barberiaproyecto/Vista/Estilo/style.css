@@ -1,24 +1,36 @@
-/*Estilo de css para la barberia*/
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+    display: none;
+}
+
+.body-cliente {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
 }
 
-header {
+.header-cliente {
     background-color: #1a1a1a;
     padding: 1rem;
     position: fixed;
     width: 100%;
+    top: 0;
     z-index: 1000;
+    border-radius: 0; /* Remueve los bordes redondeados */
 }
 
-nav {
+.navegacion-cliente {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -26,32 +38,32 @@ nav {
     margin: 0 auto;
 }
 
-.logo {
+.logo-cliente {
     color: #ffffff;
     font-size: 1.5rem;
     font-weight: bold;
 }
 
-.menu {
+.menu-cliente {
     display: flex;
     list-style: none;
 }
 
-.menu li a {
+.menu-cliente li a {
     color: #ffffff;
     text-decoration: none;
     padding: 0.5rem 1rem;
     transition: color 0.3s;
-    
 }
 
-.menu li a:hover {
+.menu-cliente li a:hover {
     color: #c4a777;
 }
 
 .hero {
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-                url('https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimg1.wsimg.com%2Fisteam%2Fip%2F62f0d26d-f569-402c-a8da-b7a6eaeab9f0%2Fshutterstock_1880376892.jpg&f=1&nofb=1&ipt=39aa3e0c39b286a81b80f4e6cc104335fda354f5ecf7c649c4edb824798c68bd&ipo=images') center/cover;
+    url('https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimg1.wsimg.com%2Fisteam%2Fip%2F62f0d26d-f569-402c-a8da-b7a6eaeab9f0%2Fshutterstock_1880376892.jpg&f=1&nofb=1&ipt=39aa3e0c39b286a81b80f4e6cc104335fda354f5ecf7c649c4edb824798c68bd&ipo=images') center/cover;
+    background-attachment: fixed;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -60,6 +72,8 @@ nav {
     text-align: center;
     color: #ffffff;
     padding: 0 1rem;
+    width: 100vw; /* Asegura que abarque todo el ancho */
+    border-radius: 0; 
 }
 
 .hero h1 {
@@ -72,7 +86,7 @@ nav {
     margin-bottom: 2rem;
 }
 
-.btn, .btn-service {
+.btn-reservar, .btn-service {
     background-color: #c4a777;
     color: #ffffff;
     padding: 1rem 2rem;
@@ -90,12 +104,13 @@ nav {
     margin-top: 1rem;
 }
 
-.btn:hover, .btn-service:hover {
+.btn-reservar:hover, .btn-service:hover {
     background-color: #a88d5f;
 }
 
 .services, .barbers, .booking, .contact {
-    padding: 5rem 1rem;
+    padding: 5rem 0;
+    width: 100vw; /* Asegura que abarque todo el ancho */
 }
 
 .services, .contact {
@@ -108,11 +123,21 @@ section h2 {
     color: #1a1a1a;
 }
 
-.services-grid, .barbers-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+.services-grid {
+    display: flex;
+    flex-wrap: wrap;
     gap: 2rem;
-    max-width: 1200px;
+    justify-content: center;
+    max-width: 1200px; /* Limita el ancho de las tarjetas de servicios */
+    margin: 0 auto;
+}
+
+.barbers-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    max-width: 1200px; /* Limita el ancho de las tarjetas de barberos */
     margin: 0 auto;
 }
 
@@ -122,6 +147,8 @@ section h2 {
     overflow: hidden;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
+    flex: 1 1 300px; /* Tamaño adaptable según el espacio disponible */
+    max-width: 300px;
 }
 
 .service-card img, .barber-card img {
@@ -143,11 +170,6 @@ section h2 {
     font-weight: bold;
     color: #c4a777;
     margin: 1rem 0;
-}
-
-.barber-card {
-    text-align: center;
-    padding-bottom: 1.5rem;
 }
 
 .barber-card h3 {
@@ -196,9 +218,10 @@ section h2 {
 }
 
 .contact-container {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
     text-align: center;
+    width: 100%; /* Asegura que abarque todo el ancho */
 }
 
 .contact-content {
@@ -233,6 +256,7 @@ footer {
     color: #ffffff;
     text-align: center;
     padding: 1rem;
+    width: 100vw; /* Asegura que abarque todo el ancho */
 }
 
 @media (max-width: 768px) {
@@ -259,195 +283,8 @@ footer {
     }
 }
 
-.dorado{
+.dorado {
     color: #a88d5f;
-}
-
-.form{
-    color: #a88d5f;
-    
-}
-
-/*--------------------------------------------------------Login CSS-------------------------------------------------------*/
-.overlay {
-    position: fixed; /* Fijo para cubrir toda la pantalla */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4); /* Color negro con 50% de transparencia */
-    z-index: -1; 
-}
-.Sesion2{
-    background: url(https://cdn.pixabay.com/photo/2024/09/14/16/19/ai-generated-9047404_1280.png);
-    background: cover;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: fixed;
-}
-.Header{
-    display: flex;
-    justify-content: space-between; /* Espacio entre logo, navegación y botones */
-    align-items: center; /* Alinea verticalmente al centro */
-    padding: 15px 27px;
-    color: white;
-    position: relative; /* Para que esté encima de la capa de fondo */
-    z-index: 1; /* Para que la capa de fondo se superponga */
-}
-
-.Logo {
-    font-size: 30px;
-    font-weight: bold;
-    color: white;
-    cursor: pointer;
-    margin-left: 50px;
-}
-.navegacion nav ul {
-    display: flex;
-    list-style: none;
-}
-.navegacion nav ul li {
-    margin: 0 20px; /* Espacio entre enlaces */
-    position: relative;
-    right: -75px;
-}
-.navegacion nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-    cursor: pointer;
-}
-.navegacion nav ul li a:hover {
-    color: #cdcfcf; /* Efecto hover */
-    text-decoration: underline;
-}
-.auth-buttons {
-    display: flex;
-}
-.auth-buttons .btn-registro {
-    padding: 18px 20px;
-    background: rgba(255, 255, 255, 0.6);; /* Fondo del botón */
-    color: rgb(24, 4, 4);
-    font-size: 15px;
-    border: none;
-    border-radius: 23px;
-    margin-left: 60px; /* Espacio entre botones */
-    cursor: pointer;
-}
-.auth-buttons .btn-registro:hover {
-    background: rgba(255, 255, 255, 0.5); /* Cambio de color en hover */
-}
-.dorado{
-    color: #a88d5f;
-}
-.eslogan{
-   color: #f6f6f6;
-   text-align: center;
-   margin-top: 19px;
-   font-size: 30px;
-   font-weight: 600;
-}
-.iniciar-sesion{
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    height: 85vh;
-}
-.crearcuenta{
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    height: 85vh;
-}
-.contenedor {
-    background: rgba(123, 122, 122, 0.7); /* Fondo blanco con transparencia */
-    padding: 30px;
-    border-radius: 70px;
-    width: 350px;
-    height: 440px;
-    text-align: center;/*Alinear text en el centro*/
-    
-}
-.contenedor h2 {
-    font-size: 24px;
-    color: #100707;
-    margin-bottom: 35px;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;    
-}
-.contenedor input[type="email"],
-.contenedor input[type="password"] {
-    background: rgba(255, 255, 255, 0.6);
-    width: 100%;
-    padding: 15px;
-    margin-bottom: 40px;/*Distanicia entre un input y otro hacia abajo*/
-    border: none;
-    border-radius: 10px;
-}
-.contenedor input[type="email"]:hover,
-.contenedor input[type="password"]:hover{
-    background: rgba(255, 255, 255, 0.7);
-}
-.contenedor input[type="submit"] {
-    width: 100%;/*Cantidad extendida*/
-    padding: 15px;/*Ancho*/
-    background: rgba(177, 152, 23, 0.6);
-    border: none;
-    border-radius: 10px;
-    color: #fff;
-    font-size: 16px;/*Tamano de letra*/
-    cursor: pointer;
-}
-.contenedor input[type="submit"]:hover {
-    background: #c4a777;
-}
-/*-------------------------------------------------Login cambio de panel-----------------------------------------------*/
-.panel{
-    display: none;
-}
-.panel.activo {
-    display: flex; /* Solo el panel con la clase 'activo' estará visible */
-}
-/*Final cambio panel*/
-
-/*--------------------------------------------------------Sobre nosotros sesion-------------------------------------------------*/
-.sobrenostros {
-    color: white;
-    text-align: center;
-    padding: 80px 0;
-    display: none; /* Oculto por defecto */
-}
-
-.sobrenostros.activo {
-    display: block; /* Mostrar cuando tiene la clase "activo" */
-}
-.sobrenostros h2 {
-    font-size: 40px;
-    margin-bottom: 20px;
-}
-.sobrenostros p {
-    font-size: 20px;
-    margin-bottom: 20px;
-    text-align: justify;
-    padding: 20px;
-    max-width: 800px;
-    margin: auto; /* Centrar el párrafo */
-}
-.headerUs img {
-    width: 100%;
-    height: 65vh;
-    object-fit: cover;
-    border-radius: 20px;
-}
-.cuerpo {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-top: 40px;
-    gap: 20px; /* Espacio entre los elementos */
-    max-width: 1200px;
-    margin: auto; /* Centrar el contenedor de la sección */
 }
 
 /* ===================================================================Estilos para jefe.jsp======================================================================= */
