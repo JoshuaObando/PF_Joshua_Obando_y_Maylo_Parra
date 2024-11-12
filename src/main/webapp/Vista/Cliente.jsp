@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -90,7 +91,7 @@
         <form id="booking-form" class="booking-form" action="/barberiaproyecto/Controlador/Jefelogica.jsp" method="post">
             
             <div class="form-group">
-                <label for="email">Cedula:</label>
+                <label for="text">Cedula:</label>
                 <input type="text" id="cedula" name="cedula" required>
             </div>
             
