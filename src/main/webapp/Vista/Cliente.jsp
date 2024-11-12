@@ -88,7 +88,7 @@
 
     <section id="reservas" class="booking">
         <h2>Reserva tu Cita</h2>
-        <form id="booking-form" class="booking-form" action="/barberiaproyecto/Controlador/Jefelogica.jsp" method="post">
+        <form id="booking-form" class="booking-form" action="/barberiaproyecto/Controlador/ClienteLogica.jsp" method="post">
             
             <div class="form-group">
                 <label for="text">Cedula:</label>
@@ -96,18 +96,18 @@
             </div>
             
             <div class="form-group">
-                <label for="barber">Barbero:</label>
+                <label name="barber" for="barber">Barbero:</label>
                 <select id="barber" name="barber" required>
                     <option value="">Seleccione un barbero</option>
-                    <option value="carlos">Carlos Rodríguez (C355)</option>
-                    <option value="miguel">Miguel Hernández (C354)</option>
-                    <option value="david">David Mora (C353)</option>
+                    <option value="carlos">Carlos Rodríguez</option>
+                    <option value="miguel">Miguel Hernández</option>
+                    <option value="david">David Mora</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="service">Servicio:</label>
-                <select id="service" name="service" required>
+                <select name="service" id="service" name="service" required>
                     <option value="">Seleccione un servicio</option>
                     <option value="corte">Corte Básico - ₡6000</option>
                     <option value="corte-barba">Corte + Barba - ₡9000</option>
@@ -118,6 +118,7 @@
             <button type="submit" class="btn">Reservar Cita</button>
         </form>
     </section>
+    
 
     <section id="contacto" class="contact">
         <div class="contact-container">
