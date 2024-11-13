@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/128/595/595777.png">
-    <title>Barberia TheMan</title>
-    <link rel="stylesheet" href="Vista/Estilo/login.css">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/128/595/595777.png">
+        <title>Barberia TheMan</title>
+        <link rel="stylesheet" href="Vista/Estilo/login.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Librería de SweetAlert2 -->
+    </head>
 <body class="Sesion2">
     <div class="overlay"></div>
     <div class="Header">

@@ -3,14 +3,14 @@
 <%@ include file="../Modelo/Conexion.jsp" %>
 
 <%
+    String alertMessage = "";
+    String alertType = "error";
     String iniciarSesion = request.getParameter("Iniciar-sesion");
     String crearCuenta = request.getParameter("Crear-cuenta");
-    String alertMessage = "";
 
     Connection con = (Connection) application.getAttribute("conexion");
 
     if (iniciarSesion != null) {
-        // Lógica para iniciar sesión
         String Correo = request.getParameter("email");
         String contrasena = request.getParameter("password");
 
@@ -23,22 +23,28 @@
 
                 if (rs.next()) {
                     if ("JefeAdministrador@gmail.com".equals(rs.getString("Correo")) && "JefeAdministrador777".equals(rs.getString("contrasena"))) {
-                        response.sendRedirect("../Vista/Jefe.jsp");
+                        alertMessage = "Bienvenido, administrador.";
+                        alertType = "success";
+                        response.sendRedirect("/barberiaproyecto/Vista/Jefe.jsp");
                     } else {
-                        response.sendRedirect("../Vista/Cliente.jsp");
+                        alertMessage = "Bienvenido, cliente.";
+                        alertType = "success";
+                        response.sendRedirect("/barberiaproyecto/Vista/Cliente.jsp");
                     }
                 } else {
-                    out.println("<p style='color:red;'>Credenciales incorrectas</p>");
+                    alertMessage = "Credenciales incorrectas";
+                    alertType = "error";
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                out.println("Error en la consulta: " + e.getMessage());
+                alertMessage = "Error en la consulta: " + e.getMessage();
+                alertType = "error";
             }
         } else {
-            out.println("No se pudo establecer la conexión a la base de datos.");
+            alertMessage = "No se pudo establecer la conexión a la base de datos.";
+            alertType = "error";
         }
     } else if (crearCuenta != null) {
-        // Lógica para crear cuenta
         String Correo = request.getParameter("email2");
         String contrasena = request.getParameter("password2");
 
@@ -50,18 +56,49 @@
                 int result = psInsert.executeUpdate();
                 
                 if (result > 0) {
-                    out.println("<p style='color:green;'>Registro exitoso. Ahora puedes iniciar sesión.</p>");
+                    alertMessage = "Registro exitoso. Ahora puedes iniciar sesión.";
+                    alertType = "success";
                 }
             } catch (Exception e) {
                 if (e.getMessage().contains("El correo ya está registrado")) {
-                    out.println("<p style='color:red;'>El correo electrónico ya está registrado.</p>");
+                    alertMessage = "El correo electrónico ya está registrado.";
+                    alertType = "error";
                 } else {
-                    e.printStackTrace();
-                    out.println("<p style='color:red;'>Error en el registro: " + e.getMessage() + "</p>");
+                    alertMessage = "Error en el registro: " + e.getMessage();
+                    alertType = "error";
                 }
             }
         } else {
-            out.println("No se pudo establecer la conexión a la base de datos.");
+            alertMessage = "No se pudo establecer la conexión a la base de datos.";
+            alertType = "error";
         }
-  } 
+    }
 %>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Procesando...</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<script>
+    Swal.fire({
+        icon: '<%= alertType %>',
+        title: '<%= alertType.equals("success") ? "Éxito" : "Error" %>',
+        text: "<%= alertMessage %>",
+        confirmButtonText: 'Aceptar'
+    }).then(() => {
+        // Redirigir si es necesario después de mostrar la alerta
+        if ('<%= alertType %>' === 'success') {
+            window.location.href = '<%= request.getContextPath() %>/index.jsp'; // Cambia esta ruta según corresponda
+        } else {
+            window.history.back(); // Regresa a la página anterior en caso de error
+        }
+    });
+</script>
+
+</body>
+</html>

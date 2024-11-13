@@ -7,6 +7,8 @@
 
     // Recibir el valor de "action" para decidir qué operación realizar
     String action = request.getParameter("action");
+    String alertMessage = "";
+    String alertType = "error";
 
     if ("actualizarCita".equals(action)) {
         // Lógica para Actualizar Cita
@@ -15,33 +17,7 @@
         String codigo_barbero = request.getParameter("codigo_barbero");
         String id_servicio = request.getParameter("id_servicio");
         String fecha = request.getParameter("date");
-        String hora = "";
-
-        if("9:00".equals(request.getParameter("time"))){
-            hora = "09:00:00";
-        } else if("10:00".equals(request.getParameter("time"))){
-            hora = "10:00";
-        } else if("11:00".equals(request.getParameter("time"))){
-            hora = "11:00";
-        } else if("12:00".equals(request.getParameter("time"))){
-            hora = "12:00";
-        } else if("13:00".equals(request.getParameter("time"))){
-            hora = "13:00";
-        } else if("14:00".equals(request.getParameter("time"))){
-            hora = "14:00";
-        } else if("15:00".equals(request.getParameter("time"))){
-            hora = "15:00";
-        } else if("16:00".equals(request.getParameter("time"))){
-            hora = "16:00";
-        } else if("17:00".equals(request.getParameter("time"))){
-            hora = "17:00";
-        } else if("18:00".equals(request.getParameter("time"))){
-            hora = "18:00";
-        } else if("19:00".equals(request.getParameter("time"))){
-            hora = "19:00";
-        } else if("20:00".equals(request.getParameter("time"))){
-            hora = "20:00";
-        }
+        String hora = request.getParameter("time") != null ? request.getParameter("time") + ":00" : "";
 
         try {
             String sql = "CALL Actualizarcita(?,?,?,?,?,?);";
@@ -52,11 +28,16 @@
             pst.setString(4, id_servicio);
             pst.setString(5, fecha);
             pst.setString(6, hora);
-            pst.executeUpdate();
-            out.println("<p style='color:green;'>Cita actualizada correctamente.</p>");
+            int result = pst.executeUpdate();
+            if (result > 0) {
+                alertMessage = "Cita actualizada correctamente.";
+                alertType = "success";
+            } else {
+                alertMessage = "Error al actualizar la cita.";
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            out.println("<p style='color:red;'>Error al actualizar la cita: " + e.getMessage() + "</p>");
+            alertMessage = "Error al actualizar la cita: " + e.getMessage();
         }
 
     } else if ("eliminarCita".equals(action)) {
@@ -69,13 +50,14 @@
             pst.setString(1, id_cita);
             int result = pst.executeUpdate();
             if (result > 0) {
-                out.println("<p style='color:green;'>Cita eliminada correctamente.</p>");
+                alertMessage = "Cita eliminada correctamente.";
+                alertType = "success";
             } else {
-                out.println("<p style='color:red;'>Error al eliminar la cita.</p>");
+                alertMessage = "Error al eliminar la cita.";
             }
         } catch (Exception e) {
             e.printStackTrace();
-            out.println("<p style='color:red;'>Error al eliminar la cita: " + e.getMessage() + "</p>");
+            alertMessage = "Error al eliminar la cita: " + e.getMessage();
         }
 
     } else if ("agregarServicio".equals(action)) {
@@ -92,13 +74,14 @@
             pst.setString(3, precio);
             int result = pst.executeUpdate();
             if (result > 0) {
-                out.println("<p style='color:green;'>Servicio agregado correctamente.</p>");
+                alertMessage = "Servicio agregado correctamente.";
+                alertType = "success";
             } else {
-                out.println("<p style='color:red;'>Error al agregar el servicio.</p>");
+                alertMessage = "Error al agregar el servicio.";
             }
         } catch (Exception e) {
             e.printStackTrace();
-            out.println("<p style='color:red;'>Error desde catch: " + e.getMessage() + "</p>");
+            alertMessage = "Error desde catch: " + e.getMessage();
         }
 
     } else if ("actualizarServicio".equals(action)) {
@@ -113,11 +96,16 @@
             pst.setString(1, id_servicio);
             pst.setString(2, nombre);
             pst.setString(3, precio);
-            pst.executeUpdate();
-            out.println("<p style='color:green;'>Servicio actualizado correctamente.</p>");
+            int result = pst.executeUpdate();
+            if (result > 0) {
+                alertMessage = "Servicio actualizado correctamente.";
+                alertType = "success";
+            } else {
+                alertMessage = "Error al actualizar el servicio.";
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            out.println("<p style='color:red;'>Error al actualizar el servicio: " + e.getMessage() + "</p>");
+            alertMessage = "Error al actualizar el servicio: " + e.getMessage();
         }
 
     } else if ("eliminarServicio".equals(action)) {
@@ -130,17 +118,18 @@
             pst.setString(1, id_servicio);
             int result = pst.executeUpdate();
             if (result > 0) {
-                out.println("<p style='color:green;'>Servicio eliminado correctamente.</p>");
+                alertMessage = "Servicio eliminado correctamente.";
+                alertType = "success";
             } else {
-                out.println("<p style='color:red;'>Error al eliminar el servicio.</p>");
+                alertMessage = "Error al eliminar el servicio.";
             }
         } catch (Exception e) {
             e.printStackTrace();
-            out.println("<p style='color:red;'>Error al eliminar el servicio: " + e.getMessage() + "</p>");
+            alertMessage = "Error al eliminar el servicio: " + e.getMessage();
         }
 
     } else if ("verCitas".equals(action)) {
-        // Lógica para Ver Citas
+        // Lógica para Ver Citas sin SweetAlert
         try {
             String sql = "CALL VerCitas();";
             PreparedStatement pst = con.prepareStatement(sql);
@@ -163,8 +152,10 @@
             e.printStackTrace();
             out.println("<p style='color:red;'>Error al ver las citas: " + e.getMessage() + "</p>");
         }
+        return;
+
     } else if ("verServicios".equals(action)) {
-        // Lógica para Ver Servicios
+        // Lógica para Ver Servicios sin SweetAlert
         try {
             String sql = "CALL VerServicios();";
             PreparedStatement pst = con.prepareStatement(sql);
@@ -174,7 +165,7 @@
             out.println("<tr><th>ID Servicio</th><th>Nombre</th><th>Precio</th></tr>");
             while (rs.next()) {
                 out.println("<tr>");
-                out.println("<td>" + rs.getString("idervicio") + "</td>");
+                out.println("<td>" + rs.getString("id_Servicio") + "</td>");
                 out.println("<td>" + rs.getString("Nombre") + "</td>");
                 out.println("<td>" + rs.getString("Precio") + "</td>");
                 out.println("</tr>");
@@ -184,7 +175,34 @@
             e.printStackTrace();
             out.println("<p style='color:red;'>Error al ver los servicios: " + e.getMessage() + "</p>");
         }
+        return;
+
     } else {
-        out.println("<p style='color:red;'>Acción no válida.</p>");
+        alertMessage = "Acción no válida.";
     }
 %>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Procesando...</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<% if (!action.equals("verCitas") && !action.equals("verServicios")) { %>
+<script>
+    Swal.fire({
+        icon: '<%= alertType %>',
+        title: '<%= alertType.equals("success") ? "Éxito" : "Error" %>',
+        text: "<%= alertMessage %>",
+        confirmButtonText: 'Aceptar'
+    }).then(() => {
+        window.history.back(); // Regresa a la página anterior después de cerrar la alerta
+    });
+</script>
+<% } %>
+
+</body>
+</html>

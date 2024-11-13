@@ -8,31 +8,31 @@ String codigobarbero = "";
 String servicio = "";
 String fecha = request.getParameter("date");
 String hora = "";
- 
-if("9:00".equals(request.getParameter("time"))){
+
+if ("9:00".equals(request.getParameter("time"))) {
     hora = "09:00:00";
-}else if("10:00".equals(request.getParameter("time"))){
-    hora = "10:00";
-}else if("11:00".equals(request.getParameter("time"))){
-    hora = "11:00";
-}else if("12:00".equals(request.getParameter("time"))){
-    hora = "12:00";
-}else if("13:00".equals(request.getParameter("time"))){
-    hora = "13:00";
-}else if("14:00".equals(request.getParameter("time"))){
-    hora = "14:00";
-}else if("15:00".equals(request.getParameter("time"))){
-    hora = "15:00";
-}else if("16:00".equals(request.getParameter("time"))){
-    hora = "16:00";
-}else if("17:00".equals(request.getParameter("time"))){
-    hora = "17:00";
-}else if("18:00".equals(request.getParameter("time"))){
-    hora = "18:00";
-}else if("19:00".equals(request.getParameter("time"))){
-    hora = "19:00";
-}else if("20:00".equals(request.getParameter("time"))){
-    hora = "20:00";
+} else if ("10:00".equals(request.getParameter("time"))) {
+    hora = "10:00:00";
+} else if ("11:00".equals(request.getParameter("time"))) {
+    hora = "11:00:00";
+} else if ("12:00".equals(request.getParameter("time"))) {
+    hora = "12:00:00";
+} else if ("13:00".equals(request.getParameter("time"))) {
+    hora = "13:00:00";
+} else if ("14:00".equals(request.getParameter("time"))) {
+    hora = "14:00:00";
+} else if ("15:00".equals(request.getParameter("time"))) {
+    hora = "15:00:00";
+} else if ("16:00".equals(request.getParameter("time"))) {
+    hora = "16:00:00";
+} else if ("17:00".equals(request.getParameter("time"))) {
+    hora = "17:00:00";
+} else if ("18:00".equals(request.getParameter("time"))) {
+    hora = "18:00:00";
+} else if ("19:00".equals(request.getParameter("time"))) {
+    hora = "19:00:00";
+} else if ("20:00".equals(request.getParameter("time"))) {
+    hora = "20:00:00";
 }
 
 // Definir el código del barbero basado en el nombre seleccionado
@@ -65,15 +65,19 @@ if (con != null) {
 
         int result = psInsert.executeUpdate();
         if (result > 0) {
-            out.println("<p style='color:green;'>Cita reservada con éxito.</p>");
+            session.setAttribute("alertMessage", "Cita reservada con éxito.");
+            session.setAttribute("alertType", "success");
         } else {
-            out.println("<p style='color:red;'>Error: No se insertó la cita.</p>");
+            session.setAttribute("alertMessage", "Error: No se insertó la cita.");
+            session.setAttribute("alertType", "error");
         }
     } catch (Exception e) {
-        e.printStackTrace();
-        out.println("<p style='color:red;'>Error en la reserva de cita: " + e.getMessage() + "</p>");
+        session.setAttribute("alertMessage", "Error en la reserva de cita: " + e.getMessage());
+        session.setAttribute("alertType", "error");
     }
 } else {
-    out.println("<p style='color:red;'>No se pudo establecer la conexión a la base de datos.</p>");
+    session.setAttribute("alertMessage", "No se pudo establecer la conexión a la base de datos.");
+    session.setAttribute("alertType", "error");
 }
+response.sendRedirect("../Vista/Cliente.jsp");
 %>
