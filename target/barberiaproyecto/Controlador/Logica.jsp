@@ -5,6 +5,7 @@
 <%
     String iniciarSesion = request.getParameter("Iniciar-sesion");
     String crearCuenta = request.getParameter("Crear-cuenta");
+    String alertMessage = "";
 
     Connection con = (Connection) application.getAttribute("conexion");
 
@@ -46,8 +47,8 @@
             try (PreparedStatement psInsert = con.prepareStatement(sqlInsert)) {
                 psInsert.setString(1, Correo);
                 psInsert.setString(2, contrasena);
-
                 int result = psInsert.executeUpdate();
+                
                 if (result > 0) {
                     out.println("<p style='color:green;'>Registro exitoso. Ahora puedes iniciar sesión.</p>");
                 }
@@ -62,5 +63,5 @@
         } else {
             out.println("No se pudo establecer la conexión a la base de datos.");
         }
-    }
+  } 
 %>

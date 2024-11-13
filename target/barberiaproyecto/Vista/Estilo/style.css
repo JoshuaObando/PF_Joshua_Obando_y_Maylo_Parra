@@ -356,7 +356,9 @@ form {
 
 form input[type="text"],
 form input[type="number"],
-form input[type="datetime-local"] {
+form input[type="date"],
+form input[type="time"],
+form select {
     padding: 0.6rem;
     font-size: 1rem;
     border: 1px solid #ccc;

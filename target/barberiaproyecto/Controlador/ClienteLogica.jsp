@@ -6,6 +6,34 @@
 String cedula = request.getParameter("cedula");
 String codigobarbero = "";
 String servicio = "";
+String fecha = request.getParameter("date");
+String hora = "";
+ 
+if("9:00".equals(request.getParameter("time"))){
+    hora = "09:00:00";
+}else if("10:00".equals(request.getParameter("time"))){
+    hora = "10:00";
+}else if("11:00".equals(request.getParameter("time"))){
+    hora = "11:00";
+}else if("12:00".equals(request.getParameter("time"))){
+    hora = "12:00";
+}else if("13:00".equals(request.getParameter("time"))){
+    hora = "13:00";
+}else if("14:00".equals(request.getParameter("time"))){
+    hora = "14:00";
+}else if("15:00".equals(request.getParameter("time"))){
+    hora = "15:00";
+}else if("16:00".equals(request.getParameter("time"))){
+    hora = "16:00";
+}else if("17:00".equals(request.getParameter("time"))){
+    hora = "17:00";
+}else if("18:00".equals(request.getParameter("time"))){
+    hora = "18:00";
+}else if("19:00".equals(request.getParameter("time"))){
+    hora = "19:00";
+}else if("20:00".equals(request.getParameter("time"))){
+    hora = "20:00";
+}
 
 // Definir el código del barbero basado en el nombre seleccionado
 if ("carlos".equals(request.getParameter("barber"))) {
@@ -25,16 +53,15 @@ if ("corte".equals(request.getParameter("service"))) {
     servicio = "3";
 }
 
-// Mostrar los datos en pantalla para depuración
-out.println("<p>Recibido: Cedula=" + cedula + ", Barbero=" + codigobarbero + ", Servicio=" + servicio + "</p>");
-
 Connection con = (Connection) application.getAttribute("conexion");
 if (con != null) {
-    String sqlInsert = "CALL InsertarCita(?, ?, ?);";
+    String sqlInsert = "CALL InsertarCita(?,?,?,?,?);";
     try (PreparedStatement psInsert = con.prepareStatement(sqlInsert)) {
         psInsert.setString(1, cedula);
         psInsert.setString(2, codigobarbero);
         psInsert.setString(3, servicio);
+        psInsert.setString(4, fecha);
+        psInsert.setString(5, hora);
 
         int result = psInsert.executeUpdate();
         if (result > 0) {
